@@ -1,0 +1,16 @@
+[project]
+name = "nnvmc"
+version = "0.1.0"
+description = "Neural Network Monte Carlo methods, for bosonic and fermionic systems in 1 dimension."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flax>=0.12.2",
+    "gvar>=13.1.7",
+    "jax>=0.8.2",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.0",
+    "plotly>=6.5.1",
+    "tqdm>=4.67.1",
+]
