@@ -5,6 +5,7 @@ description = "Neural Network Monte Carlo methods, for bosonic and fermionic sys
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "anywidget>=0.9.21",
     "flax>=0.12.2",
     "gvar>=13.1.7",
     "jax>=0.8.2",
