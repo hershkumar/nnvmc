@@ -1,8 +1,3 @@
-# %% [markdown]
-# # Neural Network Variational Monte Carlo
-# 
-
-# %%
 import os
 os.environ["XLA_PYTHON_CLIENT_PREALLOCATE"]="false"
 os.environ["XLA_PYTHON_CLIENT_ALLOCATOR"]="platform"
@@ -10,7 +5,7 @@ os.environ["JAX_ENABLE_X64"]="false"
 
 
 # os.environ["XLA_FLAGS"]="--xla_cpu_multi_thread_eigen=true intra_op_parallelism_threads=16 --xla_force_host_platform_device_count={}".format(multiprocessing.cpu_count())
-os.environ["XLA_FLAGS"]="--xla_cpu_multi_thread_eigen=true intra_op_parallelism_threads=16"
+os.environ["XLA_FLAGS"]="--xla_cpu_multi_thread_eigen=true intra_op_parallelism_threads=64"
 
 from jax import numpy as jnp
 from jax import random, jit, jacfwd, grad, vmap, jvp
@@ -48,7 +43,7 @@ harmonic_omega = 1
 sigma = -m*harmonic_omega*g/2 # long range coupling
 C = 20 # denominator constant for the symmetrization
 
-G_N_CORES = 16
+G_N_CORES = 64
 
 
 
@@ -127,9 +122,8 @@ mcs = mc.Sampler(psi, (N, 1))
 
 
 # %%
-nchains = 16
-pos_initials = jnp.zeros((nchains, N))
-seeds = jnp.arange(nchains) + int(time.time())
+pos_initials = jnp.zeros((G_N_CORES, N))
+seeds = jnp.arange(G_N_CORES) + int(time.time())
 samples, acc = mcs.run_many_chains(params, (10**5)//G_N_CORES, 1000, 5, 0.15, pos_initials, seeds)
 print("num samples:", samples.shape[0])
 print(acc)
